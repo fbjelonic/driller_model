@@ -1,14 +1,27 @@
 <?xml version="1.0"?>
 <robot name="driller">
 
+  <link name="map"/>
+
+  <link name="odom"/>
+  <joint name="map_to_odom" type="fixed">
+    <parent link="map"/>
+    <child link="odom"/>
+  </joint>
+
   <link name="base_link"/>
+  <joint name="odom_to_camera_link" type="fixed">
+    <parent link="odom"/>
+    <child link="camera_link"/>
+  </joint>
+
   <link name="camera_link"/>
 
 
-  <joint name="robot_to_camera" type="fixed">
-    <parent link="base_link"/>
-    <child link="camera_link"/>
-    <origin xyz="0 -1.2 0.8" rpy="0 0 -1.57075"/>
+  <joint name="camera_to_robot" type="fixed">
+    <parent link="camera_link"/>
+    <child link="base_link"/>
+    <origin xyz="-0.12 0 -0.08" rpy="0 0 1.57075"/>
   </joint>
 
   <joint name="base_link_to_chassis" type="fixed">
@@ -19,14 +32,14 @@
   <link name="robot_chassis">
     <visual>
       <geometry>
-         <mesh filename="package://robot_model/meshes/base_link.dae"/>
+         <mesh filename="package://robot_model/meshes/base_link.dae" scale="0.1 0.1 0.1"/>
       </geometry>
-      <origin rpy="0 0 0" xyz="-0.072 0 0"/>
+      <origin rpy="0 0 0" xyz="-0.0072 0 0"/>
     </visual>
     <collision>
-      <origin xyz="0 0.22 0.25" rpy="0 0 0"/>
+      <origin xyz="0 0.022 0.025" rpy="0 0 0"/>
       <geometry>
-        <box size="1.5 3 0.5" />
+        <box size="0.15 0.3 0.05" />
       </geometry>
     </collision>
     <inertial>
@@ -38,7 +51,7 @@
   <link name="left_upper_leg">
     <visual>
       <geometry>
-         <mesh filename="package://robot_model/meshes/wheel_arm.dae"/>
+         <mesh filename="package://robot_model/meshes/wheel_arm.dae" scale="0.1 0.1 0.1"/>
       </geometry>
       <origin rpy="0.33 0 1.57075" xyz="0 0 0"/>
     </visual>
@@ -50,13 +63,13 @@
   <joint name="base_to_left_upper_leg" type="fixed">
     <parent link="robot_chassis"/>
     <child link="left_upper_leg"/>
-    <origin xyz="0.29 1.52 0.42"/>
+    <origin xyz="0.029 0.152 0.042"/>
   </joint>
 
   <link name="left_lower_leg">
     <visual>
       <geometry>
-         <mesh filename="package://robot_model/meshes/wheel_arm.dae"/>
+         <mesh filename="package://robot_model/meshes/wheel_arm.dae" scale="0.1 0.1 0.1"/>
       </geometry>
       <origin rpy="0.33 0 1.57075" xyz="0 0 0"/>
     </visual>
@@ -68,13 +81,13 @@
   <joint name="base_to_left_lower_leg" type="fixed">
     <parent link="robot_chassis"/>
     <child link="left_lower_leg"/>
-    <origin xyz="0.29 1.52 0.1"/>
+    <origin xyz="0.029 0.152 0.01"/>
   </joint>
 
   <link name="left_wheel_leg">
     <visual>
       <geometry>
-         <mesh filename="package://robot_model/meshes/wheel.dae"/>
+         <mesh filename="package://robot_model/meshes/wheel.dae" scale="0.1 0.1 0.1"/>
       </geometry>
       <origin rpy="0 1.57075 0" xyz="0 0 0"/>
     </visual>
@@ -83,9 +96,9 @@
       <inertia ixx="0.2" ixy="0.0" ixz="0.0" iyy="0.2" iyz="0.0" izz="0.2"/>
     </inertial>
    <collision>
-     <origin xyz="0.18 0 0" rpy="0 1.57075 0"/>
+     <origin xyz="0.018 0 0" rpy="0 1.57075 0"/>
      <geometry>
-       <cylinder radius="0.35" length="0.22"/>
+       <cylinder radius="0.035" length="0.022"/>
      </geometry>
    </collision>
   </link>
@@ -93,7 +106,7 @@
     <parent link="robot_chassis"/>
     <child link="left_wheel_leg"/>
     <axis xyz="1 0 0"/>
-    <origin xyz="0.9 1.52 0.05"/>
+    <origin xyz="0.09 0.152 0.005"/>
   </joint>
   <transmission name="left_leg_rotator">
     <type>transmission_interface/SimpleTransmission</type>
@@ -115,7 +128,7 @@
   <link name="right_upper_leg">
     <visual>
       <geometry>
-         <mesh filename="package://robot_model/meshes/wheel_arm.dae"/>
+         <mesh filename="package://robot_model/meshes/wheel_arm.dae" scale="0.1 0.1 0.1"/>
       </geometry>
       <origin rpy="2.8115 0 1.57075" xyz="0 0 0"/>
     </visual>
@@ -127,13 +140,13 @@
   <joint name="base_to_right_upper_leg" type="fixed">
     <parent link="robot_chassis"/>
     <child link="right_upper_leg"/>
-    <origin xyz="-0.29 1.52 0.42"/>
+    <origin xyz="-0.029 0.152 0.042"/>
   </joint>
 
   <link name="right_lower_leg">
     <visual>
       <geometry>
-         <mesh filename="package://robot_model/meshes/wheel_arm.dae"/>
+         <mesh filename="package://robot_model/meshes/wheel_arm.dae" scale="0.1 0.1 0.1"/>
       </geometry>
       <origin rpy="2.8115 0 1.57075" xyz="0 0 0"/>
     </visual>
@@ -145,13 +158,13 @@
   <joint name="base_to_right_lower_leg" type="fixed">
     <parent link="robot_chassis"/>
     <child link="right_lower_leg"/>
-    <origin xyz="-0.29 1.52 0.1"/>
+    <origin xyz="-0.029 0.152 0.01"/>
   </joint>
 
   <link name="right_wheel_leg">
     <visual>
       <geometry>
-         <mesh filename="package://robot_model/meshes/wheel.dae"/>
+         <mesh filename="package://robot_model/meshes/wheel.dae" scale="0.1 0.1 0.1"/>
       </geometry>
       <origin rpy="0 -1.57075 0" xyz="0 0 0"/>
     </visual>
@@ -160,9 +173,9 @@
       <inertia ixx="0.2" ixy="0.0" ixz="0.0" iyy="0.2" iyz="0.0" izz="0.2"/>
     </inertial>
    <collision>
-     <origin xyz="-0.18 0 0" rpy="0 1.57075 0"/>
+     <origin xyz="-0.018 0 0" rpy="0 1.57075 0"/>
      <geometry>
-       <cylinder radius="0.35" length="0.22"/>
+       <cylinder radius="0.035" length="0.022"/>
      </geometry>
    </collision>
   </link>
@@ -170,7 +183,7 @@
     <parent link="robot_chassis"/>
     <child link="right_wheel_leg"/>
     <axis xyz="1 0 0"/>
-    <origin xyz="-0.9 1.52 0.05"/>
+    <origin xyz="-0.09 0.152 0.005"/>
     <limit effort="30" velocity="1.0"/>
   </joint>
   <transmission name="right_leg_rotator">
@@ -193,7 +206,7 @@
   <link name="left_upper_arm">
     <visual>
       <geometry>
-         <mesh filename="package://robot_model/meshes/wheel_arm.dae"/>
+         <mesh filename="package://robot_model/meshes/wheel_arm.dae" scale="0.1 0.1 0.1"/>
       </geometry>
       <origin rpy="-0.33 3.1415 1.57075" xyz="0 0 0"/>
     </visual>
@@ -205,13 +218,13 @@
   <joint name="base_to_left_upper_arm" type="fixed">
     <parent link="robot_chassis"/>
     <child link="left_upper_arm"/>
-    <origin xyz="0.29 -0.95 0.42"/>
+    <origin xyz="0.029 -0.095 0.042"/>
   </joint>
 
   <link name="left_lower_arm">
     <visual>
       <geometry>
-         <mesh filename="package://robot_model/meshes/wheel_arm.dae"/>
+         <mesh filename="package://robot_model/meshes/wheel_arm.dae" scale="0.1 0.1 0.1"/>
       </geometry>
       <origin rpy="-0.33 3.1415 1.57075" xyz="0 0 0"/>
     </visual>
@@ -223,13 +236,13 @@
   <joint name="base_to_left_lower_arm" type="fixed">
     <parent link="robot_chassis"/>
     <child link="left_lower_arm"/>
-    <origin xyz="0.29 -0.95 0.1"/>
+    <origin xyz="0.029 -0.095 0.01"/>
   </joint>
 
   <link name="left_wheel_steering">
     <visual>
       <geometry>
-         <mesh filename="package://robot_model/meshes/front_steer.dae"/>
+         <mesh filename="package://robot_model/meshes/front_steer.dae" scale="0.1 0.1 0.1"/>
       </geometry>
       <origin rpy="0 0 0" xyz="0 0 0"/>
     </visual>
@@ -243,7 +256,7 @@
     <child link="left_wheel_steering"/>
     <limit effort="1000.0" lower="-0.4" upper="0.4" velocity="0.5"/>
     <axis xyz="0 0 1"/>
-    <origin xyz="0.85 -0.95 0.05"/>
+    <origin xyz="0.085 -0.095 0.005"/>
     <limit effort="30" velocity="1.0"/>
   </joint>
   <transmission name="left_wheel_steering_rot">
@@ -259,7 +272,7 @@
   <link name="left_wheel_arm">
     <visual>
       <geometry>
-         <mesh filename="package://robot_model/meshes/wheel.dae"/>
+         <mesh filename="package://robot_model/meshes/wheel.dae" scale="0.1 0.1 0.1"/>
       </geometry>
       <origin rpy="0 1.57075 0" xyz="0 0 0"/>
     </visual>
@@ -268,9 +281,9 @@
       <inertia ixx="0.2" ixy="0.0" ixz="0.0" iyy="0.2" iyz="0.0" izz="0.2"/>
     </inertial>
    <collision>
-     <origin xyz="0.18 0 0" rpy="0 1.57075 0"/>
+     <origin xyz="0.018 0 0" rpy="0 1.57075 0"/>
      <geometry>
-       <cylinder radius="0.35" length="0.22"/>
+       <cylinder radius="0.035" length="0.022"/>
      </geometry>
    </collision>
   </link>
@@ -278,7 +291,7 @@
     <parent link="left_wheel_steering"/>
     <child link="left_wheel_arm"/>
     <axis xyz="1 0 0"/>
-    <origin xyz="0.05 0 0"/>
+    <origin xyz="0.005 0 0"/>
   </joint>
     <gazebo reference="left_wheel_arm">
       <mu1 value="200.0"/>
@@ -291,7 +304,7 @@
   <link name="right_upper_arm">
     <visual>
       <geometry>
-         <mesh filename="package://robot_model/meshes/wheel_arm.dae"/>
+         <mesh filename="package://robot_model/meshes/wheel_arm.dae" scale="0.1 0.1 0.1"/>
       </geometry>
       <origin rpy="3.4715 3.1415 1.57075" xyz="0 0 0"/>
     </visual>
@@ -303,13 +316,13 @@
   <joint name="base_to_right_upper_arm" type="fixed">
     <parent link="robot_chassis"/>
     <child link="right_upper_arm"/>
-    <origin xyz="-0.29 -0.95 0.42"/>
+    <origin xyz="-0.029 -0.095 0.042"/>
   </joint>
 
   <link name="right_lower_arm">
     <visual>
       <geometry>
-         <mesh filename="package://robot_model/meshes/wheel_arm.dae"/>
+         <mesh filename="package://robot_model/meshes/wheel_arm.dae" scale="0.1 0.1 0.1"/>
       </geometry>
       <origin rpy="3.4715 3.1415 1.57075" xyz="0 0 0"/>
     </visual>
@@ -321,13 +334,13 @@
   <joint name="base_to_right_lower_arm" type="fixed">
     <parent link="robot_chassis"/>
     <child link="right_lower_arm"/>
-    <origin xyz="-0.29 -0.95 0.1"/>
+    <origin xyz="-0.029 -0.095 0.01"/>
   </joint>
 
   <link name="right_wheel_steering">
     <visual>
       <geometry>
-         <mesh filename="package://robot_model/meshes/front_steer.dae"/>
+         <mesh filename="package://robot_model/meshes/front_steer.dae" scale="0.1 0.1 0.1"/>
       </geometry>
       <origin rpy="0 3.1415 0" xyz="0 0 0"/>
     </visual>
@@ -341,7 +354,7 @@
     <child link="right_wheel_steering"/>
     <limit effort="1000.0" lower="-0.4" upper="0.4" velocity="0.5"/>
     <axis xyz="0 0 1"/>
-    <origin xyz="-0.85 -0.95 0.05"/>
+    <origin xyz="-0.085 -0.095 0.005"/>
     <limit effort="30" velocity="1.0"/>
   </joint>
   <transmission name="right_wheel_steering_rot">
@@ -357,7 +370,7 @@
   <link name="right_wheel_arm">
     <visual>
       <geometry>
-         <mesh filename="package://robot_model/meshes/wheel.dae"/>
+         <mesh filename="package://robot_model/meshes/wheel.dae" scale="0.1 0.1 0.1"/>
       </geometry>
       <origin rpy="0 -1.57075 0" xyz="0 0 0"/>
     </visual>
@@ -366,9 +379,9 @@
       <inertia ixx="0.2" ixy="0.0" ixz="0.0" iyy="0.2" iyz="0.0" izz="0.2"/>
     </inertial>
    <collision>
-     <origin xyz="-0.18 0 0" rpy="0 1.57075 0"/>
+     <origin xyz="-0.018 0 0" rpy="0 1.57075 0"/>
      <geometry>
-       <cylinder radius="0.35" length="0.22"/>
+       <cylinder radius="0.035" length="0.022"/>
      </geometry>
    </collision>
   </link>
@@ -376,7 +389,7 @@
     <parent link="right_wheel_steering"/>
     <child link="right_wheel_arm"/>
     <axis xyz="1 0 0"/>
-    <origin xyz="-0.05 0 0"/>
+    <origin xyz="-0.005 0 0"/>
   </joint>
     <gazebo reference="right_wheel_arm">
       <mu1 value="200.0"/>
